@@ -24,7 +24,7 @@ public class CampusController {
         campusCreator.create(campusSave);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("location","/api/v1/campus/" + campusSave);
-        return new ResponseEntity<HttpStatus>(httpHeaders,HttpStatus.NOT_FOUND);
+        return new ResponseEntity<HttpStatus>(httpHeaders,HttpStatus.CREATED);
     }
 
     @GetMapping("/id/{id}")

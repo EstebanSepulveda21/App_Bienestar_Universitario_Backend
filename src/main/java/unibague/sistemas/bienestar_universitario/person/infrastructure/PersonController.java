@@ -10,6 +10,7 @@ import unibague.sistemas.bienestar_universitario.person.aplication.create.Person
 import unibague.sistemas.bienestar_universitario.person.domain.create.PersonCreator;
 import unibague.sistemas.bienestar_universitario.person.infrastructure.entities.PersonEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,7 +26,7 @@ public class PersonController {
         personCreator.create(personSave);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("location","/api/v1/person/" + personSave.getName());
-        return new ResponseEntity<HttpStatus>(httpHeaders,HttpStatus.NOT_FOUND);
+        return new ResponseEntity<HttpStatus>(httpHeaders,HttpStatus.CREATED);
     }
 
     @GetMapping("/id/{id}")
@@ -49,6 +50,25 @@ public class PersonController {
         }
         return new ResponseEntity<PersonEntity>(personByEmailAndPassword.get(),HttpStatus.OK);
     }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<PersonEntity>> getAllPerson(){
+        if(ResponseEntity.ok().body(this.personCreator.getAll()).getStatusCode() == HttpStatus.OK){
+            return ResponseEntity.ok().body(this.personCreator.getAll());
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long personId) throws Exception{
+        personCreator.deletePersonById(personId);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("location","/api/v1/person/" + personId);
+        return new ResponseEntity<HttpStatus>(httpHeaders,HttpStatus.I_AM_A_TEAPOT);
+    }
+
+
 }
 
 @Data

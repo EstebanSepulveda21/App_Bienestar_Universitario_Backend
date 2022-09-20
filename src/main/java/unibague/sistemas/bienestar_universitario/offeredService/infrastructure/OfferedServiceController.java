@@ -30,7 +30,7 @@ public class OfferedServiceController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("location","/api/v1/offeredService/" +
                 offeredServiceSave.getName());
-        return new ResponseEntity<HttpStatus>(httpHeaders, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<HttpStatus>(httpHeaders, HttpStatus.CREATED);
     }
 
     @GetMapping("/id/{id}")
