@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import unibague.sistemas.bienestar_universitario.campus.aplication.create.CampusRequest;
 import unibague.sistemas.bienestar_universitario.campus.domain.create.CampusCreator;
 import unibague.sistemas.bienestar_universitario.campus.infrastructure.entities.CampusEntity;
+import unibague.sistemas.bienestar_universitario.person.infrastructure.entities.PersonEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -37,6 +39,16 @@ public class CampusController {
         }
         return new ResponseEntity<CampusEntity>(campusById.get(),HttpStatus.OK);
     }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<CampusEntity>> getAllCampus(){
+        if(ResponseEntity.ok().body(this.campusCreator.getAll()).getStatusCode() == HttpStatus.OK){
+            return ResponseEntity.ok().body(this.campusCreator.getAll());
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
 @Data
 final class Request{

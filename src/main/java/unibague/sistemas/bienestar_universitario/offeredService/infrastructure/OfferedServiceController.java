@@ -10,7 +10,9 @@ import unibague.sistemas.bienestar_universitario.campus.infrastructure.entities.
 import unibague.sistemas.bienestar_universitario.offeredService.aplication.create.OfferedServiceRequest;
 import unibague.sistemas.bienestar_universitario.offeredService.domain.create.OfferedServiceCreator;
 import unibague.sistemas.bienestar_universitario.offeredService.infrastructure.entities.OfferedServiceEntity;
+import unibague.sistemas.bienestar_universitario.person.infrastructure.entities.PersonEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -23,7 +25,7 @@ public class OfferedServiceController {
     @PostMapping
     public ResponseEntity<HttpStatus> create(@RequestBody Request offeredService){
         OfferedServiceRequest offeredServiceSave = new OfferedServiceRequest(
-                offeredService.getId(), offeredService.getCampusId(), offeredService.getName(),
+                offeredService.getId(), offeredService.getCampus(), offeredService.getName(),
                 offeredService.getDescription(), offeredService.getCapacity()
         );
         offeredServiceCreator.create(offeredServiceSave);
@@ -44,12 +46,21 @@ public class OfferedServiceController {
         return new ResponseEntity<OfferedServiceEntity>(serviceByid.get(), HttpStatus.OK);
 
     }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<OfferedServiceEntity>> getAllOfferedService(){
+        if(ResponseEntity.ok().body(this.offeredServiceCreator.getAll()).getStatusCode() == HttpStatus.OK){
+            return ResponseEntity.ok().body(this.offeredServiceCreator.getAll());
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
 
 @Data
 final class Request{
     private Long id;
-    private CampusEntity campusId;
+    private CampusEntity campus;
     private String name;
     private String description;
     private Long capacity;

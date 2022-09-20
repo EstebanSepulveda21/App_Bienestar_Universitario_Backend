@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import unibague.sistemas.bienestar_universitario.person.aplication.create.PersonRequest;
 import unibague.sistemas.bienestar_universitario.person.domain.create.PersonCreator;
 import unibague.sistemas.bienestar_universitario.person.infrastructure.entities.PersonEntity;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -67,7 +66,6 @@ public class PersonController {
         httpHeaders.add("location","/api/v1/person/" + personId);
         return new ResponseEntity<HttpStatus>(httpHeaders,HttpStatus.I_AM_A_TEAPOT);
     }
-
 
 }
 
