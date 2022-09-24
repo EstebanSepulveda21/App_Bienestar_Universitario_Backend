@@ -25,7 +25,7 @@ public class OfferedServiceController {
     @PostMapping
     public ResponseEntity<HttpStatus> create(@RequestBody Request offeredService){
         OfferedServiceRequest offeredServiceSave = new OfferedServiceRequest(
-                offeredService.getId(), offeredService.getCampus(), offeredService.getName(),
+                offeredService.getId(), offeredService.getCampusId(), offeredService.getName(),
                 offeredService.getDescription(), offeredService.getCapacity()
         );
         offeredServiceCreator.create(offeredServiceSave);
@@ -60,7 +60,7 @@ public class OfferedServiceController {
 @Data
 final class Request{
     private Long id;
-    private CampusEntity campus;
+    private CampusEntity campusId;
     private String name;
     private String description;
     private Long capacity;

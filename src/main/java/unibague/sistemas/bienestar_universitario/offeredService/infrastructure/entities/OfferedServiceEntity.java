@@ -1,5 +1,6 @@
 package unibague.sistemas.bienestar_universitario.offeredService.infrastructure.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,14 +14,17 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity(name = "OfferedService")
-@Table(name = "servicioofertado")
+@Table(name = "servicio_ofertado")
 public class OfferedServiceEntity {
     @Id
     @Column(name = "id")
     private Long id;
-    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "sedeid")
-    private CampusEntity campus;
+
+     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JoinColumn(name = "campus_id")
+    private CampusEntity campusId;
+
     @Column(name = "name",
             nullable = false,
             columnDefinition = "varchar(255)")
