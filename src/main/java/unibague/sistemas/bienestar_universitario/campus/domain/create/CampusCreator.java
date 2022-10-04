@@ -1,6 +1,6 @@
 package unibague.sistemas.bienestar_universitario.campus.domain.create;
 
-import unibague.sistemas.bienestar_universitario.campus.aplication.create.CampusRequest;
+import unibague.sistemas.bienestar_universitario.campus.application.create.CampusRequest;
 import unibague.sistemas.bienestar_universitario.campus.infrastructure.entities.CampusEntity;
 
 import java.util.List;

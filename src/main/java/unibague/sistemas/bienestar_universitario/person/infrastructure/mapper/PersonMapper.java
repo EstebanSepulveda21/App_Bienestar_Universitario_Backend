@@ -1,7 +1,7 @@
 package unibague.sistemas.bienestar_universitario.person.infrastructure.mapper;
 
 import org.mapstruct.Mapper;
-import unibague.sistemas.bienestar_universitario.person.aplication.create.PersonRequest;
+import unibague.sistemas.bienestar_universitario.person.application.create.PersonRequest;
 import unibague.sistemas.bienestar_universitario.person.domain.Person;
 import unibague.sistemas.bienestar_universitario.person.domain.valueObjects.*;
 import unibague.sistemas.bienestar_universitario.person.infrastructure.entities.PersonEntity;

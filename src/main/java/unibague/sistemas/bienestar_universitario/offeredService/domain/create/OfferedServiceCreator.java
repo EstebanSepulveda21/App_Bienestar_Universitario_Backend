@@ -1,6 +1,6 @@
 package unibague.sistemas.bienestar_universitario.offeredService.domain.create;
 
-import unibague.sistemas.bienestar_universitario.offeredService.aplication.create.OfferedServiceRequest;
+import unibague.sistemas.bienestar_universitario.offeredService.application.create.OfferedServiceRequest;
 import unibague.sistemas.bienestar_universitario.offeredService.infrastructure.entities.OfferedServiceEntity;
 
 import java.util.List;

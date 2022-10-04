@@ -1,4 +1,4 @@
-package unibague.sistemas.bienestar_universitario.campus.aplication.create;
+package unibague.sistemas.bienestar_universitario.campus.application.create;
 
 
 import lombok.AllArgsConstructor;

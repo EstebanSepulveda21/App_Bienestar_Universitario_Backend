@@ -1,7 +1,7 @@
 package unibague.sistemas.bienestar_universitario.offeredService.infrastructure.mapper;
 
 import org.mapstruct.Mapper;
-import unibague.sistemas.bienestar_universitario.offeredService.aplication.create.OfferedServiceRequest;
+import unibague.sistemas.bienestar_universitario.offeredService.application.create.OfferedServiceRequest;
 import unibague.sistemas.bienestar_universitario.offeredService.domain.OfferedService;
 import unibague.sistemas.bienestar_universitario.offeredService.domain.valueObjects.*;
 import unibague.sistemas.bienestar_universitario.offeredService.infrastructure.entities.OfferedServiceEntity;

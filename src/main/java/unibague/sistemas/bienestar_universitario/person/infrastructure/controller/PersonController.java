@@ -1,4 +1,4 @@
-package unibague.sistemas.bienestar_universitario.person.infrastructure;
+package unibague.sistemas.bienestar_universitario.person.infrastructure.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,7 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import unibague.sistemas.bienestar_universitario.person.aplication.create.PersonRequest;
+import unibague.sistemas.bienestar_universitario.person.application.create.PersonRequest;
 import unibague.sistemas.bienestar_universitario.person.domain.create.PersonCreator;
 import unibague.sistemas.bienestar_universitario.person.infrastructure.entities.PersonEntity;
 import java.util.List;

@@ -1,6 +1,6 @@
 package unibague.sistemas.bienestar_universitario.person.domain.create;
 
-import unibague.sistemas.bienestar_universitario.person.aplication.create.PersonRequest;
+import unibague.sistemas.bienestar_universitario.person.application.create.PersonRequest;
 import unibague.sistemas.bienestar_universitario.person.infrastructure.entities.PersonEntity;
 
 import java.util.List;

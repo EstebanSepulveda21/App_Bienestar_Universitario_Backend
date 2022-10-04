@@ -1,7 +1,7 @@
 package unibague.sistemas.bienestar_universitario.campus.infrastructure.mapper;
 
 import org.mapstruct.Mapper;
-import unibague.sistemas.bienestar_universitario.campus.aplication.create.CampusRequest;
+import unibague.sistemas.bienestar_universitario.campus.application.create.CampusRequest;
 import unibague.sistemas.bienestar_universitario.campus.domain.Campus;
 import unibague.sistemas.bienestar_universitario.campus.domain.valueObjects.CampusAddress;
 import unibague.sistemas.bienestar_universitario.campus.domain.valueObjects.CampusId;

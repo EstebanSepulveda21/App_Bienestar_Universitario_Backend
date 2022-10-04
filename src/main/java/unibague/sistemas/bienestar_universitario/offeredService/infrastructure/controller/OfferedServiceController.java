@@ -1,4 +1,4 @@
-package unibague.sistemas.bienestar_universitario.offeredService.infrastructure;
+package unibague.sistemas.bienestar_universitario.offeredService.infrastructure.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,10 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import unibague.sistemas.bienestar_universitario.campus.infrastructure.entities.CampusEntity;
-import unibague.sistemas.bienestar_universitario.offeredService.aplication.create.OfferedServiceRequest;
+import unibague.sistemas.bienestar_universitario.offeredService.application.create.OfferedServiceRequest;
 import unibague.sistemas.bienestar_universitario.offeredService.domain.create.OfferedServiceCreator;
 import unibague.sistemas.bienestar_universitario.offeredService.infrastructure.entities.OfferedServiceEntity;
-import unibague.sistemas.bienestar_universitario.person.infrastructure.entities.PersonEntity;
 
 import java.util.List;
 import java.util.Optional;

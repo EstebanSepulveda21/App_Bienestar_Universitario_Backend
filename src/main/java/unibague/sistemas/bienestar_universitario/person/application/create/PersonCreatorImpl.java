@@ -1,4 +1,4 @@
-package unibague.sistemas.bienestar_universitario.person.aplication.create;
+package unibague.sistemas.bienestar_universitario.person.application.create;
 
 import lombok.AllArgsConstructor;
 import unibague.sistemas.bienestar_universitario.person.domain.Person;
