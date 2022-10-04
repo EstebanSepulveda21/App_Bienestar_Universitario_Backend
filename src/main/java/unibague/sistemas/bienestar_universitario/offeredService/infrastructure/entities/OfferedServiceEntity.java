@@ -14,15 +14,15 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity(name = "OfferedService")
-@Table(name = "servicio_ofertado")
+@Table(name = "servicioofertado")
 public class OfferedServiceEntity {
     @Id
     @Column(name = "id")
     private Long id;
 
-     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @JoinColumn(name = "campus_id")
+    @JoinColumn(name = "sedeid")
     private CampusEntity campusId;
 
     @Column(name = "name",
