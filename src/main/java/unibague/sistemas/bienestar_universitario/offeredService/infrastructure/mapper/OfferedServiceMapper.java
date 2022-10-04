@@ -22,7 +22,7 @@ public abstract class OfferedServiceMapper {
     public OfferedServiceEntity offeredServiceToOfferedServiceEntity(OfferedService offeredService){
         return OfferedServiceEntity.builder()
                 .id(offeredService.getId().value())
-                .campus(offeredService.getCampusId().value())
+                .campusId(offeredService.getCampusId().value())
                 .name(offeredService.getName().value())
                 .description(offeredService.getDescription().value())
                 .capacity(offeredService.getCapacity().value())
