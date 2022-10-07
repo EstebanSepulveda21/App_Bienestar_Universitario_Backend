@@ -16,6 +16,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/v1/booking")
@@ -43,6 +44,22 @@ public class BookingController {
             return new ResponseEntity<List<BookingEntity>>(HttpStatus.NOT_FOUND);
         }
     }
+
+
+    @GetMapping("/searchByServiceId/{serviceId}")
+    public ResponseEntity<List<BookingEntity>> getBookingsByServiceId(@PathVariable("serviceId") Long serviceId){
+        Optional<List<BookingEntity>> bookingById = bookingCreator.findBookingByOfferedServiceId(serviceId);
+        if(!bookingById.isPresent()){
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("location","/api/v1/booking/searchById/" + serviceId);
+            return new ResponseEntity<List<BookingEntity>>(httpHeaders,HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<BookingEntity>>(bookingById.get(),HttpStatus.OK);
+
+        }
+
+
+
 
     @GetMapping("/searchById/{bookingId}")
     public ResponseEntity<BookingEntity> bookingById(@PathVariable("bookingId") Long bookingId){

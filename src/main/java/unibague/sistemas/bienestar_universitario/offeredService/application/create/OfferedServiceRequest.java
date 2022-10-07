@@ -12,7 +12,7 @@ import unibague.sistemas.bienestar_universitario.campus.infrastructure.entities.
 @Builder
 public final class OfferedServiceRequest {
     private Long id;
-    private CampusEntity campusId;
+    private CampusEntity CampusId;
     private String name;
     private String description;
     private Long capacity;

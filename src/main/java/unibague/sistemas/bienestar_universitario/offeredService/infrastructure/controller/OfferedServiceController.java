@@ -14,6 +14,7 @@ import unibague.sistemas.bienestar_universitario.offeredService.infrastructure.e
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/v1/offeredService")
