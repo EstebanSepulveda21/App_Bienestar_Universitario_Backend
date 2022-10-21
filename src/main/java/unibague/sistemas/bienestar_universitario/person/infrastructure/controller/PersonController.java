@@ -12,7 +12,7 @@ import unibague.sistemas.bienestar_universitario.person.infrastructure.entities.
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*") //http://localhost:4200
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/v1/person")
@@ -20,7 +20,7 @@ public class PersonController {
 
     private final PersonCreator personCreator;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<HttpStatus> create(@RequestBody Request person){
         PersonRequest personSave = new PersonRequest(person.getId(), person.getName(), person.getLastName(), person.getEmail(), person.getUserType(), person.getPassword());
         personCreator.create(personSave);
@@ -29,7 +29,7 @@ public class PersonController {
         return new ResponseEntity<HttpStatus>(httpHeaders,HttpStatus.CREATED);
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/searchPersonById/{id}")
     public ResponseEntity<PersonEntity> personById(@PathVariable("id") Long personId){
         Optional<PersonEntity> personById = personCreator.findPersonById(personId);
         if(!personById.isPresent()){
@@ -40,7 +40,7 @@ public class PersonController {
         return new ResponseEntity<PersonEntity>(personById.get(),HttpStatus.OK);
     }
 
-    @GetMapping("/email/{email}/pass/{password}")
+    @GetMapping("/login/email/{email}/pass/{password}")
     public ResponseEntity<PersonEntity> personByEmail(@PathVariable("email") String personEmail, @PathVariable("password") String personPassword){
         Optional<PersonEntity> personByEmailAndPassword = personCreator.findPersonByEmailAndPassword(personEmail, personPassword);
         if(!personByEmailAndPassword.isPresent()){
@@ -60,7 +60,7 @@ public class PersonController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deletePersonById/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long personId) throws Exception{
         personCreator.deletePersonById(personId);
         HttpHeaders httpHeaders = new HttpHeaders();
