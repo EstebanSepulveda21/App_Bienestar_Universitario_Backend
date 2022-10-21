@@ -14,7 +14,7 @@ import unibague.sistemas.bienestar_universitario.offeredService.infrastructure.e
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*") //http://localhost:4200
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/v1/offeredService")
@@ -22,7 +22,7 @@ public class OfferedServiceController {
 
     private final OfferedServiceCreator offeredServiceCreator;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<HttpStatus> create(@RequestBody Request offeredService){
         OfferedServiceRequest offeredServiceSave = new OfferedServiceRequest(
                 offeredService.getId(), offeredService.getCampusId(), offeredService.getName(),
@@ -35,7 +35,7 @@ public class OfferedServiceController {
         return new ResponseEntity<HttpStatus>(httpHeaders, HttpStatus.CREATED);
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/searchOfferedServiceById/{id}")
     public ResponseEntity<OfferedServiceEntity> offeredServiceById(@PathVariable("id") Long serviceId){
         Optional<OfferedServiceEntity> serviceByid = offeredServiceCreator.findOfferedServiceById(serviceId);
         if(!serviceByid.isPresent()){

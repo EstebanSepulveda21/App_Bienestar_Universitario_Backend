@@ -18,7 +18,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*") //http://localhost:4200
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/v1/booking")
@@ -47,7 +47,6 @@ public class BookingController {
             sendMailService.sendMail("cristiansv999155@gmail.com", booking.getPersonId().getEmail(), subject, msg);
         }
 
-
         bookingCreator.create(bookingRequestSave);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("location", "/api/v1/booking/create" + bookingRequestSave.getPersonId());
@@ -74,7 +73,7 @@ public class BookingController {
         }
         return new ResponseEntity<List<BookingEntity>>(bookingById.get(),HttpStatus.OK);
 
-        }
+    }
 
 
 

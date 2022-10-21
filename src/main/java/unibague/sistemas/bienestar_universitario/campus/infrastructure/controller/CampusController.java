@@ -13,13 +13,14 @@ import unibague.sistemas.bienestar_universitario.campus.infrastructure.entities.
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/v1/campus")
 public class CampusController {
     private CampusCreator campusCreator;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<HttpStatus> create(@RequestBody Request campus){
         CampusRequest campusSave = new CampusRequest(campus.getId(), campus.getName(), campus.getAddress());
         campusCreator.create(campusSave);
@@ -28,7 +29,7 @@ public class CampusController {
         return new ResponseEntity<HttpStatus>(httpHeaders,HttpStatus.CREATED);
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/searchCampusById/{id}")
     public ResponseEntity<CampusEntity> campusById(@PathVariable("id") Long campusId){
         Optional<CampusEntity> campusById = campusCreator.findCampusById(campusId);
         if(!campusById.isPresent()){
