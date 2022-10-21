@@ -2,6 +2,7 @@ package unibague.sistemas.bienestar_universitario.booking.infrastructure.control
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import unibague.sistemas.bienestar_universitario.booking.domain.create.BookingCr
 import unibague.sistemas.bienestar_universitario.booking.infrastructure.entities.BookingEntity;
 import unibague.sistemas.bienestar_universitario.offeredService.infrastructure.entities.OfferedServiceEntity;
 import unibague.sistemas.bienestar_universitario.person.infrastructure.entities.PersonEntity;
+import unibague.sistemas.bienestar_universitario.sendMail.service.SendMailService;
 
 import java.util.Calendar;
 import java.util.List;
@@ -24,12 +26,28 @@ public class BookingController {
 
     private final BookingCreator bookingCreator;
 
+    @Autowired
+    private SendMailService sendMailService;
+
     @PostMapping("/create")
     public ResponseEntity<HttpStatus> create(@RequestBody Request booking){
         BookingRequest bookingRequestSave = new BookingRequest(
                 booking.getId(), booking.getDate(), booking.getPersonId(),
                 booking.getOfferedServiceId()
         );
+
+        if(booking.getOfferedServiceId().getId() == 1)
+        {
+            String subject = "Mensaje de prueba Santa Ana";
+            String msg = "Sede Santa Ana prueba ";
+            sendMailService.sendMail("cristiansv999155@gmail.com", booking.getPersonId().getEmail(), subject, msg);
+        }else if(booking.getOfferedServiceId().getId() == 2) {
+            String subject = "Mensaje de prueba Universidad de ibague";
+            String msg = "Sede Unibague";
+            sendMailService.sendMail("cristiansv999155@gmail.com", booking.getPersonId().getEmail(), subject, msg);
+        }
+
+
         bookingCreator.create(bookingRequestSave);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("location", "/api/v1/booking/create" + bookingRequestSave.getPersonId());

@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity(name = "OfferedService")
-@Table(name = "servicio_ofertado")
+@Table(name = "OfferedService")
 public class OfferedServiceEntity {
     @Id
     private Long id;

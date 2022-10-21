@@ -2,6 +2,7 @@ package unibague.sistemas.bienestar_universitario.person.infrastructure.controll
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import unibague.sistemas.bienestar_universitario.person.application.create.PersonRequest;
 import unibague.sistemas.bienestar_universitario.person.domain.create.PersonCreator;
 import unibague.sistemas.bienestar_universitario.person.infrastructure.entities.PersonEntity;
+import unibague.sistemas.bienestar_universitario.sendMail.service.SendMailService;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -20,13 +23,19 @@ public class PersonController {
 
     private final PersonCreator personCreator;
 
+
+
     @PostMapping
     public ResponseEntity<HttpStatus> create(@RequestBody Request person){
         PersonRequest personSave = new PersonRequest(person.getId(), person.getName(), person.getLastName(), person.getEmail(), person.getUserType(), person.getPassword());
         personCreator.create(personSave);
+
+
+
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("location","/api/v1/person/" + personSave.getName());
         return new ResponseEntity<HttpStatus>(httpHeaders,HttpStatus.CREATED);
+
     }
 
     @GetMapping("/id/{id}")

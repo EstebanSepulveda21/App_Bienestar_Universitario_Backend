@@ -14,7 +14,7 @@ public interface BookingRepositoryJpa extends JpaRepository<BookingEntity, Long>
 
 
     @Query(value = "select * from reservas, persona,servicio_ofertado\n" +
-            "where reservas.date > CURRENT_DATE and reservas.personaid = persona.id  and reservas.servicioofertadoid = servicio_ofertado.id \n" +
+            "where cast(reservas.date as date) = CURRENT_DATE and reservas.personaid = persona.id  and reservas.servicioofertadoid = servicio_ofertado.id \n" +
             "and reservas.servicioofertadoid = ?1 order by date ASC", nativeQuery = true)
 
     Optional<List<BookingEntity>> findByOfferedServiceId(Long offeredServiceId);
