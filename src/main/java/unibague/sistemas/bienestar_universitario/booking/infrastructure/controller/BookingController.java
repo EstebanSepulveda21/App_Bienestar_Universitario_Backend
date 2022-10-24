@@ -68,14 +68,23 @@ public class BookingController {
         Optional<List<BookingEntity>> bookingById = bookingCreator.findBookingByOfferedServiceId(serviceId);
         if(!bookingById.isPresent()){
             HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("location","/api/v1/booking/searchById/" + serviceId);
+            httpHeaders.add("location","/api/v1/booking/searchByServiceId/" + serviceId);
             return new ResponseEntity<List<BookingEntity>>(httpHeaders,HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<List<BookingEntity>>(bookingById.get(),HttpStatus.OK);
 
     }
 
-
+    @GetMapping("/searchBookingByPersonId/{personId}")
+    public ResponseEntity<List<BookingEntity>> getBookingByPersonId(@PathVariable("personId") Long personId){
+        Optional<List<BookingEntity>> bookingByPersonId = bookingCreator.findBookingByPersonId(personId);
+        if(!bookingByPersonId.isPresent()){
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("location","/api/v1/booking/searchBookingByPersonId/" + personId);
+            return new ResponseEntity<List<BookingEntity>>(httpHeaders,HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<BookingEntity>>(bookingByPersonId.get(),HttpStatus.OK);
+    }
 
 
     @GetMapping("/searchById/{bookingId}")
