@@ -2,24 +2,14 @@ package unibague.sistemas.bienestar_universitario.person.infrastructure.controll
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.json.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import unibague.sistemas.bienestar_universitario.person.application.create.PersonRequest;
 import unibague.sistemas.bienestar_universitario.person.domain.create.PersonCreator;
-import unibague.sistemas.bienestar_universitario.person.domain.validation.PersonValidate;
 import unibague.sistemas.bienestar_universitario.person.infrastructure.entities.PersonEntity;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,24 +28,6 @@ public class PersonController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("location","/api/v1/person/" + personSave.getName());
         return new ResponseEntity<HttpStatus>(httpHeaders,HttpStatus.CREATED);
-    }
-
-    @PostMapping
-    @Path("auth")
-    public Response validateLogin(@RequestBody Request person){
-        boolean status = PersonValidate.validate(person.getEmail(), person.getPassword());
-        if(status){
-            String HASH = "AHGC-12BD-1328-75HF-HD64";
-
-            JsonObject json = Json.createObjectBuilder()
-                    .add("token", HASH)
-                    .build();
-            return Response.status(Response.Status.CREATED).entity(json).build();
-        }
-        JsonObject json = Json.createObjectBuilder()
-                .add("message","Data incorrect")
-                .build();
-        return Response.status(Response.Status.UNAUTHORIZED).entity(json).build();
     }
 
     @GetMapping("/searchPersonById/{id}")
