@@ -55,6 +55,14 @@ public class OfferedServiceController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @DeleteMapping("/deleteOfferedServiceById/{id}")
+    public ResponseEntity<HttpStatus> deleteOfferedServiceById(@PathVariable("id") Long id) throws Exception{
+        offeredServiceCreator.deleteOfferedServiceById(id);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("location","/api/v1/offeredService/deleteOfferedServiceById" + id);
+        return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+    }
 }
 
 @Data

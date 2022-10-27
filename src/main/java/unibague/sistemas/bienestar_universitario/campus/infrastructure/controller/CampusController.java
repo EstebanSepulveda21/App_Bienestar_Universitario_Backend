@@ -49,6 +49,13 @@ public class CampusController {
         }
     }
 
+    @DeleteMapping("/deleteCampusById/{id}")
+    public ResponseEntity<HttpStatus> deleteCampusById(@PathVariable("id") Long id) throws Exception{
+        campusCreator.deleteCampusById(id);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("location", "/api/v1/campus/deleteCampusById/" + id);
+        return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+    }
 }
 @Data
 final class Request{
