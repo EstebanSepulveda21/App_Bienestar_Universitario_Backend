@@ -14,8 +14,6 @@ public interface BookingCreator {
     Optional<List<BookingEntity>> findBookingByDate(Calendar date);
     Optional<List<BookingEntity>> findBookingByPersonId(Long personId);
 
-
-
     Optional<List<BookingEntity>> findBookingByOfferedServiceId(Long offeredServiceId);
 
     Optional<List<BookingEntity>> findBookingByPersonIdAndDate(Long personId, Calendar date);

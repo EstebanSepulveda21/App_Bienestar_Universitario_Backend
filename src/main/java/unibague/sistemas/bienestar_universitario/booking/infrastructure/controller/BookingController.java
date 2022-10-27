@@ -14,7 +14,10 @@ import unibague.sistemas.bienestar_universitario.offeredService.infrastructure.e
 import unibague.sistemas.bienestar_universitario.person.infrastructure.entities.PersonEntity;
 import unibague.sistemas.bienestar_universitario.sendMail.service.SendMailService;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -96,6 +99,39 @@ public class BookingController {
             return new ResponseEntity<BookingEntity>(httpHeaders,HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<BookingEntity>(bookingById.get(),HttpStatus.OK);
+    }
+
+    @GetMapping("/searchByDate/{bookingDate}")
+    public ResponseEntity<List<BookingEntity>> bookingByDate(@PathVariable("bookingDate") String bookingDate){
+        Calendar dateSearch = Calendar.getInstance();
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSz");
+        ZonedDateTime zdt = ZonedDateTime.parse(bookingDate,f);
+        Date date = Date.from(zdt.toInstant());
+        dateSearch.setTime(date);
+        Optional<List<BookingEntity>> bookingByDate = bookingCreator.findBookingByDate(dateSearch);
+        if(!bookingByDate.isPresent()){
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("location","/api/v1/booking/searchByDate/" + dateSearch);
+            return new ResponseEntity<List<BookingEntity>>(httpHeaders,HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<BookingEntity>>(bookingByDate.get(),HttpStatus.OK);
+    }
+
+    @GetMapping("/searchByPersonId/{bookingPersonId}/And/Date/{bookingDate}")
+    public ResponseEntity<List<BookingEntity>> bookingByPersonIdAndDate(@PathVariable("bookingPersonId") Long personId,
+                                                                        @PathVariable("bookingDate") String bookingDate){
+        Calendar dateSearch = Calendar.getInstance();
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSz");
+        ZonedDateTime zdt = ZonedDateTime.parse(bookingDate,f);
+        Date date = Date.from(zdt.toInstant());
+        dateSearch.setTime(date);
+        Optional<List<BookingEntity>> bookingByPersonIdAndDate = bookingCreator.findBookingByPersonIdAndDate(personId,dateSearch);
+        if(!bookingByPersonIdAndDate.isPresent()){
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("location","/api/v1/booking/searchByPersonId/" + personId + "/And/Date/" + dateSearch);
+            return new ResponseEntity<List<BookingEntity>>(httpHeaders,HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<BookingEntity>>(bookingByPersonIdAndDate.get(),HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteBooking/{bookingId}")
