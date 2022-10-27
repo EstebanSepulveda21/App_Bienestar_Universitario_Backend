@@ -24,15 +24,19 @@ public class OfferedServiceController {
 
     @PostMapping("/create")
     public ResponseEntity<HttpStatus> create(@RequestBody Request offeredService){
-        OfferedServiceRequest offeredServiceSave = new OfferedServiceRequest(
-                offeredService.getId(), offeredService.getCampusId(), offeredService.getName(),
-                offeredService.getDescription(), offeredService.getCapacity()
-        );
-        offeredServiceCreator.create(offeredServiceSave);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("location","/api/v1/offeredService/" +
-                offeredServiceSave.getName());
-        return new ResponseEntity<HttpStatus>(httpHeaders, HttpStatus.CREATED);
+        try {
+            OfferedServiceRequest offeredServiceSave = new OfferedServiceRequest(
+                    offeredService.getId(), offeredService.getCampusId(), offeredService.getName(),
+                    offeredService.getDescription(), offeredService.getCapacity()
+            );
+            offeredServiceCreator.create(offeredServiceSave);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("location", "/api/v1/offeredService/" +
+                    offeredServiceSave.getName());
+            return new ResponseEntity<HttpStatus>(httpHeaders, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<HttpStatus>(HttpStatus.valueOf(e.getMessage()),HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/searchOfferedServiceById/{id}")
@@ -58,10 +62,14 @@ public class OfferedServiceController {
 
     @DeleteMapping("/deleteOfferedServiceById/{id}")
     public ResponseEntity<HttpStatus> deleteOfferedServiceById(@PathVariable("id") Long id) throws Exception{
-        offeredServiceCreator.deleteOfferedServiceById(id);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("location","/api/v1/offeredService/deleteOfferedServiceById" + id);
-        return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+        try {
+            offeredServiceCreator.deleteOfferedServiceById(id);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("location", "/api/v1/offeredService/deleteOfferedServiceById" + id);
+            return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<HttpStatus>(HttpStatus.valueOf(e.getMessage()),HttpStatus.NOT_FOUND);
+        }
     }
 }
 

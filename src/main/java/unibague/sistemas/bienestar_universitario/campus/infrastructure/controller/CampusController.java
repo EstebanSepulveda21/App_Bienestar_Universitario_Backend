@@ -22,11 +22,15 @@ public class CampusController {
 
     @PostMapping("/create")
     public ResponseEntity<HttpStatus> create(@RequestBody Request campus){
-        CampusRequest campusSave = new CampusRequest(campus.getId(), campus.getName(), campus.getAddress());
-        campusCreator.create(campusSave);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("location","/api/v1/campus/" + campusSave);
-        return new ResponseEntity<HttpStatus>(httpHeaders,HttpStatus.CREATED);
+        try {
+            CampusRequest campusSave = new CampusRequest(campus.getId(), campus.getName(), campus.getAddress());
+            campusCreator.create(campusSave);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("location", "/api/v1/campus/" + campusSave);
+            return new ResponseEntity<HttpStatus>(httpHeaders, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<HttpStatus>(HttpStatus.valueOf(e.getMessage()),HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/searchCampusById/{id}")
@@ -51,10 +55,14 @@ public class CampusController {
 
     @DeleteMapping("/deleteCampusById/{id}")
     public ResponseEntity<HttpStatus> deleteCampusById(@PathVariable("id") Long id) throws Exception{
-        campusCreator.deleteCampusById(id);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("location", "/api/v1/campus/deleteCampusById/" + id);
-        return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+        try {
+            campusCreator.deleteCampusById(id);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("location", "/api/v1/campus/deleteCampusById/" + id);
+            return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<HttpStatus>(HttpStatus.valueOf(e.getMessage()),HttpStatus.NOT_FOUND);
+        }
     }
 }
 @Data

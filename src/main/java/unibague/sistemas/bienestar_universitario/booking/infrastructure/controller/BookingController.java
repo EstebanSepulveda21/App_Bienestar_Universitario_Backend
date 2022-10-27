@@ -34,26 +34,29 @@ public class BookingController {
 
     @PostMapping("/create")
     public ResponseEntity<HttpStatus> create(@RequestBody Request booking){
-        BookingRequest bookingRequestSave = new BookingRequest(
-                booking.getId(), booking.getDate(), booking.getPersonId(),
-                booking.getOfferedServiceId()
-        );
+        try {
+            BookingRequest bookingRequestSave = new BookingRequest(
+                    booking.getId(), booking.getDate(), booking.getPersonId(),
+                    booking.getOfferedServiceId()
+            );
 
-        if(booking.getOfferedServiceId().getId() == 1)
-        {
-            String subject = "Mensaje de prueba Santa Ana";
-            String msg = "Sede Santa Ana prueba ";
-            sendMailService.sendMail("cristiansv999155@gmail.com", booking.getPersonId().getEmail(), subject, msg);
-        }else if(booking.getOfferedServiceId().getId() == 2) {
-            String subject = "Mensaje de prueba Universidad de ibague";
-            String msg = "Sede Unibague";
-            sendMailService.sendMail("cristiansv999155@gmail.com", booking.getPersonId().getEmail(), subject, msg);
+            if (booking.getOfferedServiceId().getId() == 1) {
+                String subject = "Mensaje de prueba Santa Ana";
+                String msg = "Sede Santa Ana prueba ";
+                sendMailService.sendMail("cristiansv999155@gmail.com", booking.getPersonId().getEmail(), subject, msg);
+            } else if (booking.getOfferedServiceId().getId() == 2) {
+                String subject = "Mensaje de prueba Universidad de ibague";
+                String msg = "Sede Unibague";
+                sendMailService.sendMail("cristiansv999155@gmail.com", booking.getPersonId().getEmail(), subject, msg);
+            }
+
+            bookingCreator.create(bookingRequestSave);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("location", "/api/v1/booking/create" + bookingRequestSave.getPersonId());
+            return new ResponseEntity<HttpStatus>(httpHeaders, HttpStatus.CREATED);
+        }catch(Exception e){
+            return new ResponseEntity<HttpStatus>(HttpStatus.valueOf(e.getMessage()),HttpStatus.NOT_FOUND);
         }
-
-        bookingCreator.create(bookingRequestSave);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("location", "/api/v1/booking/create" + bookingRequestSave.getPersonId());
-        return new ResponseEntity<HttpStatus>(httpHeaders,HttpStatus.CREATED);
     }
 
     @GetMapping("/allBookings")
@@ -136,10 +139,14 @@ public class BookingController {
 
     @DeleteMapping("/deleteBooking/{bookingId}")
     public ResponseEntity<HttpStatus> delete(@PathVariable("bookingId") Long bookingId) throws Exception {
-        bookingCreator.deleteBookingById(bookingId);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("location", "/api/v1/booking/deleteBooking/"+bookingId);
-        return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+        try {
+            bookingCreator.deleteBookingById(bookingId);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("location", "/api/v1/booking/deleteBooking/" + bookingId);
+            return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<HttpStatus>(HttpStatus.valueOf(e.getMessage()),HttpStatus.NOT_FOUND);
+        }
     }
 }
 

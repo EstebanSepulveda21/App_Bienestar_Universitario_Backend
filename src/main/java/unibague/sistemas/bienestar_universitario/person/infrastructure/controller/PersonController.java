@@ -23,11 +23,15 @@ public class PersonController {
 
     @PostMapping("/create")
     public ResponseEntity<HttpStatus> create(@RequestBody Request person){
-        PersonRequest personSave = new PersonRequest(person.getId(), person.getName(), person.getLastName(), person.getEmail(), person.getUserType(), person.getPassword());
-        personCreator.create(personSave);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("location","/api/v1/person/" + personSave.getName());
-        return new ResponseEntity<HttpStatus>(httpHeaders,HttpStatus.CREATED);
+        try {
+            PersonRequest personSave = new PersonRequest(person.getId(), person.getName(), person.getLastName(), person.getEmail(), person.getUserType(), person.getPassword());
+            personCreator.create(personSave);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("location", "/api/v1/person/" + personSave.getName());
+            return new ResponseEntity<HttpStatus>(httpHeaders, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<HttpStatus>(HttpStatus.valueOf(e.getMessage()),HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/searchPersonById/{id}")
@@ -54,6 +58,10 @@ public class PersonController {
 
     @GetMapping("/getAll")
     public ResponseEntity<List<PersonEntity>> getAllPerson(){
+        List<PersonEntity> listPersons = personCreator.getAll();
+        if(listPersons.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
         if(ResponseEntity.ok().body(this.personCreator.getAll()).getStatusCode() == HttpStatus.OK){
             return ResponseEntity.ok().body(this.personCreator.getAll());
         }else{
@@ -63,10 +71,14 @@ public class PersonController {
 
     @DeleteMapping("/deletePersonById/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long personId) throws Exception{
-        personCreator.deletePersonById(personId);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("location","/api/v1/person/" + personId);
-        return new ResponseEntity<HttpStatus>(httpHeaders,HttpStatus.I_AM_A_TEAPOT);
+        try {
+            personCreator.deletePersonById(personId);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("location", "/api/v1/person/" + personId);
+            return new ResponseEntity<HttpStatus>(httpHeaders, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<HttpStatus>(HttpStatus.valueOf(e.getMessage()),HttpStatus.NOT_FOUND);
+        }
     }
 
 }
