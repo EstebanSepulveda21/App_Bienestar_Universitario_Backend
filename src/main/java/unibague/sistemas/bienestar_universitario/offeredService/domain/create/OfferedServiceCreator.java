@@ -14,4 +14,5 @@ public interface OfferedServiceCreator {
 
     void update(Long id, OfferedServiceRequest offeredServiceRequest) throws Exception;
     void deleteOfferedServiceById(Long offeredServiceId) throws Exception;
+    void deletedOfferedServicesById(Long id) throws Exception;
 }

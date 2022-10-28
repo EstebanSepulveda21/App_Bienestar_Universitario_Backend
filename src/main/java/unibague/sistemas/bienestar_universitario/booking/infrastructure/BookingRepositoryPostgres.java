@@ -58,4 +58,9 @@ public class BookingRepositoryPostgres implements BookingsRepository {
         bookingRepositoryJpa.deleteById(bookingEntity.getId());
     }
 
+    @Override
+    public void deleteBookingById(Long id) {
+        bookingRepositoryJpa.deleteById(id);
+    }
+
 }

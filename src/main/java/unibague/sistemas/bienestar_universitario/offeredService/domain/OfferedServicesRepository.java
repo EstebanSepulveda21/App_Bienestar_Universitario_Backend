@@ -9,5 +9,6 @@ public interface OfferedServicesRepository {
     void save(OfferedService offeredService);
     Optional<OfferedServiceEntity> findOfferedServiceById(Long id);
     void delete(OfferedServiceEntity offeredService);
+    void deleteOfferedServiceById(Long id);
     List<OfferedServiceEntity> getAll();
 }

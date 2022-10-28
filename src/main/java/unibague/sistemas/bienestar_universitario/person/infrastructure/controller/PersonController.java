@@ -74,7 +74,7 @@ public class PersonController {
         try {
             personCreator.deletePersonById(personId);
             HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("location", "/api/v1/person/" + personId);
+            httpHeaders.add("location", "/api/v1/person/deletePersonById/" + personId);
             return new ResponseEntity<HttpStatus>(httpHeaders, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<HttpStatus>(HttpStatus.valueOf(e.getMessage()),HttpStatus.NOT_FOUND);

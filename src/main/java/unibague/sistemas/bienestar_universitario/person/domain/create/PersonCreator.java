@@ -8,9 +8,14 @@ import java.util.Optional;
 
 public interface PersonCreator {
     void create(PersonRequest personRequest);
+
     Optional<PersonEntity> findPersonById(Long personId);
+
     Optional<PersonEntity> findPersonByEmailAndPassword(String email, String password);
+
     List<PersonEntity> getAll();
+
     void update(Long id, PersonRequest personRequest) throws Exception;
+
     void deletePersonById(Long personId) throws Exception;
 }

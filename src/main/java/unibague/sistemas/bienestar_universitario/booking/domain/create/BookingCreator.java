@@ -19,4 +19,5 @@ public interface BookingCreator {
     Optional<List<BookingEntity>> findBookingByPersonIdAndDate(Long personId, Calendar date);
     List<BookingEntity> getAll();
     void deleteBookingById(Long bookingId) throws Exception;
+    void deleteBookingByIdExample(Long bookingId) throws Exception;
 }

@@ -54,4 +54,14 @@ public class OfferedServiceCreatorImpl implements OfferedServiceCreator {
             servicesRepository.delete(offeredServiceDelete.get());
         }
     }
+
+    @Override
+    public void deletedOfferedServicesById(Long id) throws Exception {
+        Optional<OfferedServiceEntity> offeredServiceDelete = findOfferedServiceById(id);
+        if(!offeredServiceDelete.isPresent()){
+            throw new Exception("The id does not exist: " + id);
+        }else{
+            servicesRepository.deleteOfferedServiceById(id);
+        }
+    }
 }

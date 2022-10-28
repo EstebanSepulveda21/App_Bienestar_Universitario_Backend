@@ -22,4 +22,5 @@ public interface BookingsRepository {
     Optional<List<BookingEntity>> findBookingByPersonIdAndDate(Long personId, Calendar date);
     List<BookingEntity> getAll();
     void deleteById(BookingEntity bookingEntity);
+    void deleteBookingById(Long id);
 }

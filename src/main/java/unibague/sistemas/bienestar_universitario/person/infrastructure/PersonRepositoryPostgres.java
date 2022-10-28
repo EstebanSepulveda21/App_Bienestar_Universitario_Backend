@@ -41,4 +41,5 @@ public class PersonRepositoryPostgres implements PersonsRepository {
     public List<PersonEntity> getAll() {
         return personRepositoryJpa.findAll();
     }
+
 }

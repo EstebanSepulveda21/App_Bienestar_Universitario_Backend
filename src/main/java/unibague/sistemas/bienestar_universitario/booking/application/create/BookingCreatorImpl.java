@@ -65,4 +65,14 @@ public class BookingCreatorImpl implements BookingCreator {
         }
     }
 
+    @Override
+    public void deleteBookingByIdExample(Long bookingId) throws Exception {
+        Optional<BookingEntity> bookingDelete = findBookingById(bookingId);
+        if(!bookingDelete.isPresent()){
+            throw new Exception("The booking id does not exist: " + bookingId);
+        }else{
+            bookingsRepository.deleteBookingById(bookingId);
+        }
+    }
+
 }

@@ -60,12 +60,24 @@ public class OfferedServiceController {
         }
     }
 
-    @DeleteMapping("/deleteOfferedServiceById/{id}")
+    @DeleteMapping("/deleteStupid/{id}")
     public ResponseEntity<HttpStatus> deleteOfferedServiceById(@PathVariable("id") Long id) throws Exception{
         try {
             offeredServiceCreator.deleteOfferedServiceById(id);
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.add("location", "/api/v1/offeredService/deleteOfferedServiceById" + id);
+            return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<HttpStatus>(HttpStatus.valueOf(e.getMessage()),HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/deleteOfferedServiceById/{id}")
+    public ResponseEntity<HttpStatus> deletedid(@PathVariable("id") Long id) throws Exception{
+        try{
+            offeredServiceCreator.deletedOfferedServicesById(id);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("location", "/api/v1/offeredService/deleteOfferedServiceById/" + id);
             return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<HttpStatus>(HttpStatus.valueOf(e.getMessage()),HttpStatus.NOT_FOUND);

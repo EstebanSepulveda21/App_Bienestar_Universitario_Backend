@@ -1,6 +1,7 @@
 package unibague.sistemas.bienestar_universitario.booking.infrastructure;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import unibague.sistemas.bienestar_universitario.booking.infrastructure.entities.BookingEntity;
 
@@ -23,4 +24,7 @@ public interface BookingRepositoryJpa extends JpaRepository<BookingEntity, Long>
 
     Optional<List<BookingEntity>> findByPersonIdAndDate(Long personId, Calendar date);
     void deleteByPersonId(BookingEntity bookingEntity);
+    @Modifying
+    @Query(value = "delete from reservas where id = ?1", nativeQuery = true)
+    void deleteById(Long id);
 }

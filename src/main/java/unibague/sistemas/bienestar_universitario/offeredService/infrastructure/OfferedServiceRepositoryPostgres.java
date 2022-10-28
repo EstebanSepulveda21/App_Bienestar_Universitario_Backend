@@ -33,6 +33,11 @@ public class OfferedServiceRepositoryPostgres implements OfferedServicesReposito
     }
 
     @Override
+    public void deleteOfferedServiceById(Long id) {
+        serviceRepositoryJpa.deleteById(id);
+    }
+
+    @Override
     public List<OfferedServiceEntity> getAll() {
         return serviceRepositoryJpa.findAll();
     }

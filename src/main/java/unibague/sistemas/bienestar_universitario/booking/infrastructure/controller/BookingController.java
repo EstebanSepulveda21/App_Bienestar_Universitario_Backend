@@ -137,12 +137,24 @@ public class BookingController {
         return new ResponseEntity<List<BookingEntity>>(bookingByPersonIdAndDate.get(),HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteBooking/{bookingId}")
+    @DeleteMapping("/deleteStupid/{bookingId}")
     public ResponseEntity<HttpStatus> delete(@PathVariable("bookingId") Long bookingId) throws Exception {
         try {
             bookingCreator.deleteBookingById(bookingId);
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.add("location", "/api/v1/booking/deleteBooking/" + bookingId);
+            return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<HttpStatus>(HttpStatus.valueOf(e.getMessage()),HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/deleteBooking/{id}")
+    public ResponseEntity<HttpStatus> deletebyid(@PathVariable("id") Long id) throws Exception {
+        try {
+            bookingCreator.deleteBookingByIdExample(id);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("location", "/api/v1/booking/deleteBooking/" + id);
             return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<HttpStatus>(HttpStatus.valueOf(e.getMessage()),HttpStatus.NOT_FOUND);
