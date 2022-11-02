@@ -8,6 +8,7 @@ import unibague.sistemas.bienestar_universitario.booking.infrastructure.mapper.B
 import unibague.sistemas.bienestar_universitario.shared.domain.Repository;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +30,8 @@ public class BookingRepositoryPostgres implements BookingsRepository {
     }
 
     @Override
-    public Optional<List<BookingEntity>> findBookingByDate(Calendar date) {
-        return bookingRepositoryJpa.findByDate(date);
+    public Optional<List<BookingEntity>> findBookingByDate(Date dateStart, Date dateEnd) {
+        return bookingRepositoryJpa.findByDate(dateStart, dateEnd);
     }
 
     @Override
@@ -63,4 +64,8 @@ public class BookingRepositoryPostgres implements BookingsRepository {
         bookingRepositoryJpa.deleteById(id);
     }
 
+
+    public Optional<List<BookingEntity>> findAllAngular() {
+        return bookingRepositoryJpa.findAllAngular();
+    }
 }

@@ -9,6 +9,7 @@ import unibague.sistemas.bienestar_universitario.booking.infrastructure.mapper.B
 import unibague.sistemas.bienestar_universitario.shared.domain.Service;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,10 +32,9 @@ public class BookingCreatorImpl implements BookingCreator {
     }
 
     @Override
-    public Optional<List<BookingEntity>> findBookingByDate(Calendar date) {
-        return bookingsRepository.findBookingByDate(date);
+    public Optional<List<BookingEntity>> findBookingByDate(Date dateStart, Date dateEnd) {
+        return bookingsRepository.findBookingByDate(dateStart, dateEnd);
     }
-
     @Override
     public Optional<List<BookingEntity>> findBookingByPersonId(Long personId) {
         return bookingsRepository.findBookingByPersonId(personId);
@@ -74,5 +74,11 @@ public class BookingCreatorImpl implements BookingCreator {
             bookingsRepository.deleteBookingById(bookingId);
         }
     }
+
+    @Override
+    public Optional<List<BookingEntity>> findAllAngular() {
+        return bookingsRepository.findAllAngular();
+    }
+
 
 }

@@ -16,6 +16,7 @@ import javax.persistence.*;
 @Entity(name = "OfferedService")
 @Table(name = "OfferedService")
 public class OfferedServiceEntity {
+
     @Id
     private Long id;
 

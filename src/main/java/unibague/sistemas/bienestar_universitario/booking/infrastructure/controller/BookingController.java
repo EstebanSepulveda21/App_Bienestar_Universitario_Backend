@@ -3,6 +3,7 @@ package unibague.sistemas.bienestar_universitario.booking.infrastructure.control
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -102,22 +103,17 @@ public class BookingController {
         return new ResponseEntity<BookingEntity>(bookingById.get(),HttpStatus.OK);
     }
 
-    @GetMapping("/searchByDate/{bookingDate}")
-    public ResponseEntity<List<BookingEntity>> bookingByDate(@PathVariable("bookingDate") String bookingDate){
-        Calendar dateSearch = Calendar.getInstance();
-        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSz");
-        ZonedDateTime zdt = ZonedDateTime.parse(bookingDate,f);
-        Date date = Date.from(zdt.toInstant());
-        dateSearch.setTime(date);
-        Optional<List<BookingEntity>> bookingByDate = bookingCreator.findBookingByDate(dateSearch);
-        if(!bookingByDate.isPresent()){
+    @GetMapping("/searchByDate")
+    public ResponseEntity<List<BookingEntity>> getBookingsByDate(@RequestParam @DateTimeFormat(pattern= "yyyy-MM-dd") Date dateStar, @RequestParam @DateTimeFormat(pattern= "yyyy-MM-dd") Date dateEnd ) {
+        Optional<List<BookingEntity>> bookingById = bookingCreator.findBookingByDate(dateStar, dateEnd);
+        if (!bookingById.isPresent()) {
             HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("location","/api/v1/booking/searchByDate/" + dateSearch);
-            return new ResponseEntity<List<BookingEntity>>(httpHeaders,HttpStatus.NOT_FOUND);
+            httpHeaders.add("location", "/api/v1/booking/searchById/" + dateStar + dateEnd);
+            return new ResponseEntity<List<BookingEntity>>(httpHeaders, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<List<BookingEntity>>(bookingByDate.get(),HttpStatus.OK);
-    }
+        return new ResponseEntity<List<BookingEntity>>(bookingById.get(), HttpStatus.OK);
 
+    }
     @GetMapping("/searchByPersonId/{bookingPersonId}/And/Date/{bookingDate}")
     public ResponseEntity<List<BookingEntity>> bookingByPersonIdAndDate(@PathVariable("bookingPersonId") Long personId,
                                                                         @PathVariable("bookingDate") String bookingDate){
@@ -156,6 +152,15 @@ public class BookingController {
             return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<HttpStatus>(HttpStatus.valueOf(e.getMessage()),HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/allBookingsAngular")
+    public ResponseEntity<List<BookingEntity>> getAllBookingsAngular(){
+        if(ResponseEntity.ok().body(this.bookingCreator.findAllAngular()).getStatusCode() == HttpStatus.OK){
+            return ResponseEntity.ok().body(this.bookingCreator.getAll());
+        }else{
+            return new ResponseEntity<List<BookingEntity>>(HttpStatus.NOT_FOUND);
         }
     }
 }

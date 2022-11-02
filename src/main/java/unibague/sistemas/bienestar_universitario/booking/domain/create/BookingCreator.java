@@ -5,13 +5,17 @@ import unibague.sistemas.bienestar_universitario.booking.application.create.Book
 import unibague.sistemas.bienestar_universitario.booking.infrastructure.entities.BookingEntity;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 public interface BookingCreator {
     void create(BookingRequest bookingRequest);
     Optional<BookingEntity> findBookingById(Long bookingId);
-    Optional<List<BookingEntity>> findBookingByDate(Calendar date);
+
+    Optional<List<BookingEntity>> findAllAngular();
+
+    Optional<List<BookingEntity>> findBookingByDate(Date dateStart, Date dateEnd);
     Optional<List<BookingEntity>> findBookingByPersonId(Long personId);
 
     Optional<List<BookingEntity>> findBookingByOfferedServiceId(Long offeredServiceId);
